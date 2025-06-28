@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
+import { useViewCount } from '@/hooks/useViewCount';
 
 const PascalsTriangle = () => {
   const [triangle, setTriangle] = useState<number[][]>([]);
-  const [viewCount, setViewCount] = useState(1247);
+  const { viewCount, loading } = useViewCount('/');
 
   useEffect(() => {
     const generateTriangle = () => {
@@ -28,14 +29,6 @@ const PascalsTriangle = () => {
     };
 
     setTriangle(generateTriangle());
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setViewCount(prev => prev + Math.floor(Math.random() * 3) + 1);
-    }, 3000 + Math.random() * 2000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -73,7 +66,7 @@ const PascalsTriangle = () => {
       </div>
       
       <div className="absolute bottom-4 right-4 text-xs text-blue-400/60 font-mono">
-        {viewCount.toLocaleString()} views
+        {loading ? '...' : viewCount.toLocaleString()} views
       </div>
     </div>
   );
