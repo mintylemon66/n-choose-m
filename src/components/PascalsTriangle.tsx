@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 const PascalsTriangle = () => {
   const [triangle, setTriangle] = useState<number[][]>([]);
+  const [viewCount, setViewCount] = useState(1247);
 
   useEffect(() => {
     const generateTriangle = () => {
@@ -29,8 +30,16 @@ const PascalsTriangle = () => {
     setTriangle(generateTriangle());
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setViewCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+    }, 3000 + Math.random() * 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-light text-blue-900 mb-2">Pascal's Triangle</h1>
@@ -61,6 +70,10 @@ const PascalsTriangle = () => {
             </div>
           ))}
         </div>
+      </div>
+      
+      <div className="absolute bottom-4 right-4 text-xs text-blue-400/60 font-mono">
+        {viewCount.toLocaleString()} views
       </div>
     </div>
   );
