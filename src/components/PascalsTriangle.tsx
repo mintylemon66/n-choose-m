@@ -41,9 +41,10 @@ const PascalsTriangle = () => {
           {triangle.map((row, rowIndex) => (
             <div 
               key={rowIndex} 
-              className="flex items-center justify-center space-x-1 md:space-x-2"
+              className="flex items-center justify-center space-x-1 md:space-x-2 opacity-0 animate-fade-in"
               style={{
-                animation: `fadeIn 0.5s ease-in-out ${rowIndex * 0.05}s both`
+                animationDelay: `${rowIndex * 0.05}s`,
+                animationFillMode: 'both'
               }}
             >
               {row.map((number, colIndex) => (
@@ -61,19 +62,6 @@ const PascalsTriangle = () => {
           ))}
         </div>
       </div>
-      
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
